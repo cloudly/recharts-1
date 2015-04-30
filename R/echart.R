@@ -49,19 +49,28 @@ echart.data.frame = function(
   y = evalFormula(y, data)
   if (type == 'auto') type = determineType(x, y)
 
-  #for bar plot, convert x  to factors
+  # for histogram, change it to bar plot with no space between bars
+  hist_indicator = 0 # need a tag here for histogram
+  if (type == 'hist') {
+    hist_indicator = 1 # use 1 for histograms
+    type = 'bar'
+  }
+  # for bar plot, convert x  to factors
   if (type == 'bar' && !is.factor(x)) x = as.factor(x)
   if (type == 'bar' && !is.numeric(y)) stop("y must be numeric for bar plot.")
 
   series = evalFormula(series, data)
   data_fun = getFromNamespace(paste0('data_', type), 'recharts')
 
-  ###start axis from 0?
+  # start axis from 0?
   if (is.numeric(x)) min_xaxis = ifelse( min(x) >0, 0, min(x))
   if (is.numeric(y)) min_yaxis = ifelse( min(y) >0, 0, min(y))
 
   params = structure(list(
-    series = data_fun(x, y, series),
+    # any better way here? only pass a parameter if it exists
+    series = ifelse(hist_indicator ==1,
+                    data_fun(x, y, series, barCategoryGap='0%'),
+                    data_fun(x, y, series)),
     xAxis = list(), yAxis = list()
     ), meta = list(
     x = x, y = y
@@ -95,7 +104,8 @@ eChart = echart
 determineType = function(x, y) {
   if (is.numeric(x) && is.numeric(y)) return('scatter')
   if (is.factor(x) && is.numeric(y)) return("bar")
-  if (is.numeric(x) && is.null(y)) return("histogram")
+  # use echart_hist() for histograms
+  # if (is.numeric(x) && is.null(y)) return("histogram")
   message('The structure of x:')
   str(x)
   message('The structure of y:')
