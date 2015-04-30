@@ -49,19 +49,22 @@ echart.data.frame = function(
   y = evalFormula(y, data)
   if (type == 'auto') type = determineType(x, y)
 
-  #for bar plot, convert x  to factors
+  # for bar plot, convert x  to factors
   if (type == 'bar' && !is.factor(x)) x = as.factor(x)
   if (type == 'bar' && !is.numeric(y)) stop("y must be numeric for bar plot.")
 
   series = evalFormula(series, data)
   data_fun = getFromNamespace(paste0('data_', type), 'recharts')
 
-  ###start axis from 0?
+  # start axis from 0?
   if (is.numeric(x)) min_xaxis = ifelse( min(x) >0, 0, min(x))
   if (is.numeric(y)) min_yaxis = ifelse( min(y) >0, 0, min(y))
 
+  # run before generating the list
+  data_prepared = data_fun(x, y, series)
+
   params = structure(list(
-    series = data_fun(x, y, series),
+    series = data_prepared$series_data,
     xAxis = list(), yAxis = list()
     ), meta = list(
     x = x, y = y
@@ -77,8 +80,12 @@ echart.data.frame = function(
 
 
   if (type == "scatter") return (chart %>% eAxis('x', name = xlab) %>% eAxis('y', name = ylab))
-  if (type == "bar") return (chart %>% eAxis('x', name = xlab, data = unique(x)) %>% eAxis('y', name = ylab, min = min_yaxis))
-  if (type == "line") return (chart %>% eAxis('x', name = xlab, data = unique(x)) %>% eAxis('y', name = ylab, min = min_yaxis))
+  if (type == "bar") return (chart %>% eAxis('x', name = xlab, data = data_prepared$xaxis) %>% eAxis('y', name = ylab, min = min_yaxis))
+  if (type == "line") return (chart %>% eAxis('x', name = xlab, data = data_prepared$xaxis) %>% eAxis('y', name = ylab, min = min_yaxis))
+  if (type == "histogram") return (chart %>%
+                                     eAxis('x', name = xlab, type="value") %>%
+                                     eAxis('y', name = 'Count', min = 0, type='value'))
+
 
 }
 
