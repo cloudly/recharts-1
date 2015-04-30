@@ -64,7 +64,11 @@ echart.data.frame = function(
   # for bar plot, convert x  to factors
   if (type == 'bar' && !is.factor(x)) x = as.factor(x)
   if (type == 'bar' && !is.numeric(y)) stop("y must be numeric for bar plot.")
+<<<<<<< HEAD
 >>>>>>> + echart_hist() to generate simple histograms. I need to deal with parameters in data_bar() because of this so there should be a better way to handle these parameters. Any idea?
+=======
+>>>>>>> 21e97e21cece1099164de51398a02dce842a830c
+>>>>>>> 5fbbb818e3e6798c0e6df841844478ceb4438484
 
   series = evalFormula(series, data)
   data_fun = getFromNamespace(paste0('data_', type), 'recharts')
@@ -75,7 +79,11 @@ echart.data.frame = function(
   if (is.numeric(x)) min_xaxis = ifelse( min(x) >0, 0, min(x))
   if (is.numeric(y)) min_yaxis = ifelse( min(y) >0, 0, min(y))
 
+<<<<<<< HEAD
 >>>>>>> + echart_hist() to generate simple histograms. I need to deal with parameters in data_bar() because of this so there should be a better way to handle these parameters. Any idea?
+=======
+>>>>>>> 21e97e21cece1099164de51398a02dce842a830c
+>>>>>>> 5fbbb818e3e6798c0e6df841844478ceb4438484
   params = structure(list(
     # any better way here? only pass a parameter if it exists
     series = ifelse(hist_indicator ==1,
@@ -122,7 +130,11 @@ determineType = function(x, y) {
   if (is.factor(x) && is.numeric(y)) return("bar")
   # use echart_hist() for histograms
   # if (is.numeric(x) && is.null(y)) return("histogram")
+<<<<<<< HEAD
 >>>>>>> + echart_hist() to generate simple histograms. I need to deal with parameters in data_bar() because of this so there should be a better way to handle these parameters. Any idea?
+=======
+>>>>>>> 21e97e21cece1099164de51398a02dce842a830c
+>>>>>>> 5fbbb818e3e6798c0e6df841844478ceb4438484
   message('The structure of x:')
   str(x)
   message('The structure of y:')

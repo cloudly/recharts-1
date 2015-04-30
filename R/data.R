@@ -66,7 +66,11 @@ data_bar = function(x, y, series = NULL,
   #otherwise, go with series.
   xy = split(as.data.frame(y), series)
   nms = names(xy)
+<<<<<<< HEAD
 >>>>>>> + echart_hist() to generate simple histograms. I need to deal with parameters in data_bar() because of this so there should be a better way to handle these parameters. Any idea?
+=======
+>>>>>>> 21e97e21cece1099164de51398a02dce842a830c
+>>>>>>> 5fbbb818e3e6798c0e6df841844478ceb4438484
   obj = list()
   for (i in seq_len(ncol(xy))) {
     obj[[i]] = list(name = nms[i], type = type, data = unname(xy[, i]))
