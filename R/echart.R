@@ -48,16 +48,39 @@ echart.data.frame = function(
   x = evalFormula(x, data)
   y = evalFormula(y, data)
   if (type == 'auto') type = determineType(x, y)
+<<<<<<< HEAD
   if (type == 'bar') {
     x = as.factor(x)
     if (is.null(y)) ylab = 'Frequency'
   }
+=======
+
+  # for histogram, change it to bar plot with no space between bars
+  hist_indicator = 0 # need a tag here for histogram
+  if (type == 'hist') {
+    hist_indicator = 1 # use 1 for histograms
+    type = 'bar'
+  }
+  # for bar plot, convert x  to factors
+  if (type == 'bar' && !is.factor(x)) x = as.factor(x)
+  if (type == 'bar' && !is.numeric(y)) stop("y must be numeric for bar plot.")
+>>>>>>> + echart_hist() to generate simple histograms. I need to deal with parameters in data_bar() because of this so there should be a better way to handle these parameters. Any idea?
 
   series = evalFormula(series, data)
   data_fun = getFromNamespace(paste0('data_', type), 'recharts')
 
+<<<<<<< HEAD
+=======
+  # start axis from 0?
+  if (is.numeric(x)) min_xaxis = ifelse( min(x) >0, 0, min(x))
+  if (is.numeric(y)) min_yaxis = ifelse( min(y) >0, 0, min(y))
+
+>>>>>>> + echart_hist() to generate simple histograms. I need to deal with parameters in data_bar() because of this so there should be a better way to handle these parameters. Any idea?
   params = structure(list(
-    series = data_fun(x, y, series),
+    # any better way here? only pass a parameter if it exists
+    series = ifelse(hist_indicator ==1,
+                    data_fun(x, y, series, barCategoryGap='0%'),
+                    data_fun(x, y, series)),
     xAxis = list(), yAxis = list()
   ), meta = list(
     x = x, y = y
@@ -87,6 +110,7 @@ eChart = echart
 
 determineType = function(x, y) {
   if (is.numeric(x) && is.numeric(y)) return('scatter')
+<<<<<<< HEAD
   # when y is numeric, plot y against x; when y is NULL, treat x as a
   # categorical variable, and plot its frequencies
   if ((is.factor(x) || is.character(x)) && (is.numeric(y) || is.null(y)))
@@ -94,6 +118,11 @@ determineType = function(x, y) {
   # FIXME: 'histogram' is not a standard plot type of ECharts
   # http://echarts.baidu.com/doc/doc.html
   if (is.numeric(x) && is.null(y)) return('histogram')
+=======
+  if (is.factor(x) && is.numeric(y)) return("bar")
+  # use echart_hist() for histograms
+  # if (is.numeric(x) && is.null(y)) return("histogram")
+>>>>>>> + echart_hist() to generate simple histograms. I need to deal with parameters in data_bar() because of this so there should be a better way to handle these parameters. Any idea?
   message('The structure of x:')
   str(x)
   message('The structure of y:')
