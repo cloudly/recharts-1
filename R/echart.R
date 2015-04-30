@@ -67,6 +67,11 @@ echart.data.frame = function(
     params$legend = list(data = levels(as.factor(series)))
   }
 
+  if("barCategoryGap" %in% names(list(...))){
+    for (i in 1:length(params$series))
+    {params$series[[i]]$barCategoryGap = list(...)$barCategoryGap}
+  }
+
   chart = htmlwidgets::createWidget(
     'echarts', params, width = width, height = height, package = 'recharts',
     dependencies = getDependency(NULL)
@@ -93,7 +98,8 @@ determineType = function(x, y) {
     return('bar')
   # FIXME: 'histogram' is not a standard plot type of ECharts
   # http://echarts.baidu.com/doc/doc.html
-  if (is.numeric(x) && is.null(y)) return('histogram')
+  # wrap the echart_hist() function
+  # if (is.numeric(x) && is.null(y)) return('histogram')
   message('The structure of x:')
   str(x)
   message('The structure of y:')

@@ -18,5 +18,5 @@ echart_hist = function(data, binwidth = NULL){
     bar_hist = hist(data, plot = FALSE , binwidth = binwidth)
   }
 
-  echart(bar_hist, ~breaks, ~counts, type = "hist" )
+  echart(bar_hist, ~breaks, ~counts,  type ="bar", barCategoryGap='0%')
 }
