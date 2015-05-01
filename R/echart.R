@@ -67,10 +67,6 @@ echart.data.frame = function(
     params$legend = list(data = levels(as.factor(series)))
   }
 
-  if("barCategoryGap" %in% names(list(...))){
-    for (i in 1:length(params$series))
-    {params$series[[i]]$barCategoryGap = list(...)$barCategoryGap}
-  }
 
   chart = htmlwidgets::createWidget(
     'echarts', params, width = width, height = height, package = 'recharts',

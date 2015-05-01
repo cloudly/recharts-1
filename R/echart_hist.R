@@ -17,6 +17,8 @@ echart_hist = function(data, binwidth = NULL){
   } else{
     bar_hist = hist(data, plot = FALSE , binwidth = binwidth)
   }
+  # adjust the breaks
+  # bar_hist$x = round(bar_hist$mids,2)
 
-  echart(bar_hist, ~breaks, ~counts,  type ="bar", barCategoryGap='0%')
+  echart(bar_hist, ~mids, ~counts,  type ="bar", barCategoryGap='0%')
 }

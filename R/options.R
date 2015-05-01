@@ -67,3 +67,9 @@ axisType = function(data, which = c('x', 'y')) {
   str(data)
   stop('Unable to derive the axis type automatically from the ', which, ' variable')
 }
+
+eSeries = function (chart,barCategoryGap, ...){
+    # basically we need to add barCategoryGap to series
+    params$series[[i]]$barCategoryGap = list(...)$barCategoryGap
+
+}
