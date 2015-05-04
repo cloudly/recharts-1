@@ -5,6 +5,7 @@ echart_stat_line = function ( stat, name = NULL){
   list(markLine= list(data = list(type = stat, name = name )))
 }
 
+
 # a more general function to add any line
 echart_abline_point = function ( start, end, name = NULL){
   # start is a vector with two values (x,y)
@@ -59,3 +60,7 @@ echart_vline = function (xintercept, name = NULL){
   echart_abline_point(start, end, name = name)
 }
 
+#choose statistic
+check_stat = function (stat) {
+  if(!stat %in% c( "max", "min", "average")) stop("Statistic line should be either max, min or average.")
+}

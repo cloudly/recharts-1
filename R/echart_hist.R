@@ -20,5 +20,5 @@ echart_hist = function(data, binwidth = NULL){
   # adjust the breaks
   # bar_hist$x = round(bar_hist$mids,2)
 
-  echart(bar_hist, ~mids, ~counts,  type ="bar", barCategoryGap='0%')
+  echart(bar_hist, ~mids, ~counts,  type ="bar") %>% eSeries ( barCategoryGap = 0)
 }
